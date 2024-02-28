@@ -5,6 +5,8 @@ from InputOutput.paramters import *
 from InputOutput.data_cleaner import DataCleaner
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
+
 
 
 # Streamlit SessionState Class
@@ -151,7 +153,9 @@ class DataAnalyzer:
 
     def data_info(self):
         st.subheader('DataFrame Info')
+        '''
         info_output=self.get_info_output()
+
         from io import StringIO
         import pandas as pd
         import matplotlib.pyplot as plt
@@ -161,10 +165,12 @@ class DataAnalyzer:
 
         info_lines=info_output.split('\n')[3:-3]
         info_str='\n'.join(info_lines)
+        print(info_str)
         info_file=StringIO(info_str)
         info_df=pd.read_csv(info_file,sep='\s\s+',engine='python')
-    
+        
         st.table(info_df)
+        '''
         st.subheader('Categorical Columns')
         categorical_cols=self.get_categorical_columns()
         st.write(categorical_cols)
@@ -198,6 +204,7 @@ class DataAnalyzer:
         info_output=sys.stdout.getvalue()
 
         sys.stdout=stdout
+        print(info_output)
 
         return info_output
     def get_categorical_columns(self):
@@ -240,9 +247,35 @@ class DataAnalyzer:
         if selected_columns:
             scatter_matrix=sns.pairplot(self.df[selected_columns])
             st.pyplot(scatter_matrix)
+    
+    def group_data(self):
+        st.subheader('Group your data here!')
+        selected_columns=st.multiselect('Select Columns for Grouping')
+        if st.button('Group Data'):
 
+            grouped_data=self.df.groupby(selected_columns)
+
+            grouped_list=[]
+
+            #Iterate over each group
+
+            for group_key, group_data in grouped_data:
+                # Create a dictionary for each group containing the group key and the data
+                group_dict={'group_key':group_key}
+                for column in self.df.columns:
+                    if column not in selected_columns:
+                        group_dict[column]=group_data[column].tolist()
+
+                grouped_list.append(group_dict)
+            # Convert the  list of ditionaries  to a Dataframe
+            grouped_df_updated=pd.DataFrame(grouped_list)
+
+            st.dataframe(grouped_df_updated)
+        
+        
     def data_cleaning(self):
-        st.subheader('Data Cleaning Section')
+        st.subheader('Data Cleaning Section', self.df.columns)
+
         # Add data cleaning operations here
         cleaning_options = st.multiselect('Select Data Cleaning Options',
                                         ['Handle Missing Values', 'Handle Duplicates', 'Correct Inconsistencies',
