@@ -8,7 +8,7 @@ import seaborn as sns
 import pandas as pd
 
 
-
+#from InputOutput.select_parameters import SelectParameter
 # Streamlit SessionState Class
 class SessionState:
     def __init__(self):
@@ -37,8 +37,21 @@ class StreamlitApp:
                 st.warning('Please upload a file first.')
 
         elif choice == 'Profiling':
-           pass
-            
+           st.title("Data Preprocessing App")
+
+            # Sidebar menu
+        option = st.sidebar.selectbox("Select Preprocessing Method", ["StandardScaler", "MinMaxScaler", "RobustScaler", "Binarizer"])
+
+            # Display parameters based on selected method
+        if option == "StandardScaler":
+            Preprocessing.standard_scaler_params()
+        elif option == "MinMaxScaler":
+            Preprocessing.min_max_scaler_params()
+        elif option == "RobustScaler":
+            Preprocessing.robust_scaler_params()
+        elif option == "Binarizer":
+            Preprocessing.binarizer_params()
+                
             
 
         elif choice == 'ML':
@@ -184,13 +197,16 @@ class DataAnalyzer:
         numerical_cols=self.get_numerical_columns()
         st.write(numerical_cols)
         st.table(self.df.describe())
-
-        for col in numerical_cols:
-            st.subheader(f'Histogram of {col}')
-            self.plot_histogram(col)
-
+        
+        st.subheader('Numerical Columns')
+        selected_num_col = st.selectbox('Select Numerical Column', numerical_cols)
+        
+        # Plot histogram for the selected numerical column
+        self.plot_histogram(selected_num_col)
+        
         self.correlation()
         self.scatter_matrix()
+        self.group_data()
 
     def get_info_output(self):
         import io
@@ -216,19 +232,55 @@ class DataAnalyzer:
         import pandas as pd
         numerical_cols=self.df.select_dtypes(include=['number']).columns.tolist()
         return numerical_cols
-    
-    def plot_histogram(self,col):
-        fig, ax=plt.subplots()
-        ax.hist(self.df[col],bins=20,color='skyblue',edgecolor='black')
-        ax.set_xlabel(col)
-        ax.set_ylabel('Frequency')
-        ax.set_title(f'Histogram of {col}')
-        ax.grid(True)
-        st.pyplot(fig)
+    def plot_histogram(self, selected_num_col=None, custom_pairs=False):
+        if not custom_pairs:
+            if selected_num_col:
+                fig, ax = plt.subplots()
+                ax.hist(self.df[selected_num_col], bins=20, color='skyblue', edgecolor='black')
+                ax.set_xlabel('Value')
+                ax.set_ylabel('Frequency')
+                ax.set_title(f'Histogram of {selected_num_col}')
+                ax.grid(True)
+                st.pyplot(fig)
+            else:
+                st.warning('Please select a numerical column to plot histogram.')
+        else:
+            st.write("Select two numerical variables for plotting histograms.")
+            available_cols = self.get_numerical_columns()
+            selected_cols = st.multiselect('Select Variables', available_cols, key='custom_hist')
+
+            if len(selected_cols) == 2:
+                x_col, y_col = selected_cols
+                fig, ax = plt.subplots()
+                ax.hist(self.df[x_col], bins=20, color='skyblue', edgecolor='black', alpha=0.5, label=x_col)
+                ax.hist(self.df[y_col], bins=20, color='salmon', edgecolor='black', alpha=0.5, label=y_col)
+                ax.set_xlabel('Value')
+                ax.set_ylabel('Frequency')
+                ax.set_title(f'Histograms of {x_col} and {y_col}')
+                ax.legend()
+                ax.grid(True)
+                st.pyplot(fig)
+            else:
+                st.write("Select two categorical variables for plotting histograms.")
+                available_cols = self.get_categorical_columns()
+                selected_cols = st.multiselect('Select Variables', available_cols, key='custom_hist')
+
+                if len(selected_cols) == 2:
+                    x_col, y_col = selected_cols
+                    fig, ax = plt.subplots()
+                    ax.hist(self.df[x_col], bins=20, color='skyblue', edgecolor='black', alpha=0.5, label=x_col)
+                    ax.hist(self.df[y_col], bins=20, color='salmon', edgecolor='black', alpha=0.5, label=y_col)
+                    ax.set_xlabel('Value')
+                    ax.set_ylabel('Frequency')
+                    ax.set_title(f'Histograms of {x_col} and {y_col}')
+                    ax.legend()
+                    ax.grid(True)
+                    st.pyplot(fig)
+
     def correlation(self):
         st.subheader('Correlation HeatMap')
         numerical_column=self.df.select_dtypes(include=['float64','int64']).columns
-        selected_column=st.selectbox('Select Numerical Column', numerical_column)
+        selected_column=st.selectbox('Select Numerical Column', numerical_column, key='correlation_selectbox')  # Unique key added
         st.write(f'Correlation Matrix for column: {selected_column}')
         corr_matrix_plot=self.df[numerical_column].corr()
         corr_matrix=self.df[numerical_column].corr()[selected_column].sort_values(ascending=False)
@@ -238,7 +290,7 @@ class DataAnalyzer:
         sns.heatmap(corr_matrix_plot,annot=True,cmap='coolwarm',fmt='.2f',linewidths=0.5,ax=ax)
         st.pyplot(fig)
         return corr_matrix
-    
+
     def scatter_matrix(self):
         st.subheader('Scatter Matrix')
         numerical_columns=self.df.select_dtypes(include=['float64','int64']).columns
@@ -250,7 +302,7 @@ class DataAnalyzer:
     
     def group_data(self):
         st.subheader('Group your data here!')
-        selected_columns=st.multiselect('Select Columns for Grouping')
+        selected_columns=st.multiselect('Select Columns for Grouping',self.df.columns)
         if st.button('Group Data'):
 
             grouped_data=self.df.groupby(selected_columns)
@@ -327,7 +379,30 @@ class DataAnalyzer:
         st.dataframe(data_cleaner.df)
         st.success("Data cleaning completed successfully.")
 
+class Preprocessing():
+    def standard_scaler_params():
+        st.subheader("StandardScaler Parameters")
+    # Define parameters for StandardScaler here
+    # Example: with_mean, with_std, etc.
+    # Allow users to set the parameters using Streamlit widgets
 
+    def min_max_scaler_params():
+        st.subheader("MinMaxScaler Parameters")
+        # Define parameters for MinMaxScaler here
+        # Example: feature_range, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    def robust_scaler_params():
+        st.subheader("RobustScaler Parameters")
+        # Define parameters for RobustScaler here
+        # Example: quantile_range, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    def binarizer_params():
+        st.subheader("Binarizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
 if __name__ == '__main__':
     app = StreamlitApp()
     app.run()
