@@ -40,7 +40,37 @@ class StreamlitApp:
            st.title("Data Preprocessing App")
 
             # Sidebar menu
-        option = st.sidebar.selectbox("Select Preprocessing Method", ["StandardScaler", "MinMaxScaler", "RobustScaler", "Binarizer"])
+        option = st.sidebar.selectbox("Select Preprocessing Method", 
+                                      ["StandardScaler", 
+                                       "MinMaxScaler", 
+                                       "RobustScaler", 
+                                       "Binarizer",
+                                       "FunctionTransformer",
+                                       "KBinsDiscrectizer",
+                                       "KernelCenterer",
+                                       "LabelBinerizer",
+                                       "LabelEncoder",
+                                       "MultiLabelBinarizer",
+                                       "MaxAbsScaler",
+                                       "Normalizer",
+                                       "OneHotEncoding",
+                                       "OrdinalEncoder",
+                                       "PolynomialFeatures",
+                                       "PowerTransformer",
+                                       "QuantileTransformer",
+                                       "SplineTransformer",
+                                       "TargetEncoder",
+                                       "add_dummy_feature",
+                                       "binarize",
+                                       "label_binarize",
+                                       "Normizer",
+                                       "maxabs_scale",
+                                       "minmax",
+                                       "normalize",
+                                       "quantile_transform",
+                                       "robust_scale",
+                                       "scale",
+                                       "power_transform"])
 
             # Display parameters based on selected method
         if option == "StandardScaler":
@@ -51,6 +81,64 @@ class StreamlitApp:
             Preprocessing.robust_scaler_params()
         elif option == "Binarizer":
             Preprocessing.binarizer_params()
+        elif option== "FunctionTransformer":
+            Preprocessing.functiontransformer_params()
+
+        elif option=="KBinsDiscretizer":
+            Preprocessing.kbinsdiscretizer_params()
+
+        elif option=="KernelCenterer":
+            Preprocessing.kernelcenterer_params()
+        elif option=="LabelBinerizer":
+            Preprocessing.labelbinarizer_params()
+        elif option=="LabelEncoder":
+            Preprocessing.labelencoder_params()
+        elif option=="MultiLabelBinarizer":
+            Preprocessing.multilabelbinerizer_params()
+        elif option=="MaxAbsScaler":
+            Preprocessing.maxabsscaler_params()
+        elif option=="Normalizer":
+            Preprocessing.normalizer_params()
+        elif option=="OneHotEncoding":
+            Preprocessing.onehotencoder_params()
+        elif option=="OrdinalEncoder":
+            Preprocessing.ordinalencoder_params()
+        elif option=="Normalizer":
+            Preprocessing.normalizer_params()
+        elif option=="PolynomialFeatures":
+            Preprocessing.polynomialfeatures_params()
+        elif option=="PowerTransformer":
+            Preprocessing.powertransformer_params()
+        elif option=="QuantileTransformer":
+            Preprocessing.quantiletransformer_params()
+        elif option=="SplineTransformer":
+            Preprocessing.splinetransformer_params()
+        elif option=="TargetEncoder":
+            Preprocessing.targetencoder_params()
+        elif option=="add_dummy_feature":
+            Preprocessing.adddummyfeature_params()
+        elif option=="binarize":
+            Preprocessing.binerizer_lower_params()
+        elif option=="label_binarize":
+            Preprocessing.labelbinerize_lower_params()
+        elif option=="Normalizer":
+            Preprocessing.normalizer_params()
+        elif option=="maxabs_scale":
+            Preprocessing.maxabs_scale_params()
+        elif option=="minmax_scale":
+            Preprocessing.minmax_scale_params()
+        elif option=="normalize":
+            Preprocessing.normalize_params()
+        elif option=="quantile_transform":
+            Preprocessing.quantile_transform_params()
+        elif option=="robust_scale":
+            Preprocessing.robust_scale_params()
+        elif option=="scale":
+            Preprocessing.scale_params()
+        elif option=="power_transform":
+            Preprocessing.power_transform_params()
+        
+
                 
             
 
@@ -403,6 +491,161 @@ class Preprocessing():
         # Define parameters for Binarizer here
         # Example: threshold, etc.
         # Allow users to set the parameters using Streamlit widgets
+
+    
+    def functiontransformer_params():
+        st.subheader("Function Transformer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def kbinsdiscretizer_params():
+        st.subheader("KBinsDiscretizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def kernelcenterer_params():
+        st.subheader("Kernel Centerer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def labelbinarizer_params():
+        st.subheader("Label Binarizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def labelencoder_params():
+        st.subheader("Label Encoder Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def multilabelbinerizer_params():
+        st.subheader("MultiLabelBinarizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def maxabsscaler_params():
+        st.subheader("MaxAbsScaler Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    
+    def normalizer_params():
+        st.subheader("Normalizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def onehotencoder_params():
+        st.subheader("OneHotEncoding Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+
+    def ordinalencoder_params():
+        st.subheader("OrdinalEncoder Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    
+    def normalizer_params():
+        st.subheader("Normalizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    
+    def polynomialfeatures_params():
+        st.subheader("PolynomialFeatures Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def powertransformer_params():
+        st.subheader("PowerTransformer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def quantiletransformer_params():
+        st.subheader("QuantileTransformer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def splinetransformer_params():
+        st.subheader("SplineTransformer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def targetencoder_params():
+        st.subheader("TargetEncoder Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def adddummyfeature_params():
+        st.subheader("add_dummy_feature Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def binerizer_lower_params():
+        st.subheader("binarize Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def labelbinerize_lower_params():
+        st.subheader("label_binerize Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def normalizer_params():
+        st.subheader("Normalizer Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def maxabs_scale_params():
+        st.subheader("maxabs_scale Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def minmax_scale_params():
+        st.subheader("minmax_scale Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def normalize_params():
+        st.subheader("normalize Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def quantile_transform_params():
+        st.subheader("quantile_transform Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def robust_scale_params():
+        st.subheader("robust_scale Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def scale_params():
+        st.subheader("scale Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    def power_transform_params():
+        st.subheader("power_transform Parameters")
+        # Define parameters for Binarizer here
+        # Example: threshold, etc.
+        # Allow users to set the parameters using Streamlit widgets
+    
 if __name__ == '__main__':
     app = StreamlitApp()
     app.run()
